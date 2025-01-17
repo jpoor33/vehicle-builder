@@ -302,20 +302,27 @@ class Cli {
         },
       ])
       .then((answers) => {
-        const selectedVehicle = answers.vehicleToTow; 
-        // Check if the selected vehicle is the truck instance passed to the method
-        if (selectedVehicle === truck) {
-          console.log("The truck cannot tow itself.");
-          // TODO: Perform actions to allow the user to select another action
-        } else {
-          if('tow' in selectedVehicle){
-            selectedVehicle.tow(truck);
-          }else {
-            console.log("This vehicle cannot be towed")
-          }
-          // TODO: Perform actions on the truck to allow the user to select another action
+        const selectedVehicle = answers.vehicleToTow;
+        if (selectedVehicle.vin === truck.vin) {
+          console.log("The truck cannot tow itself.")
+         return this.performActions();
         }
-      });
+          truck.tow(selectedVehicle) 
+          this.performActions();
+        // Check if the selected vehicle is the truck instance passed to the method
+        // if (selectedVehicle instanceof Truck) {
+        //     console.log("The truck cannot tow itself.");
+        //     // TODO: Perform actions to allow the user to select another action
+        //     return; // Exit the function to prevent further actions
+        // } else {
+        //     if (typeof selectedVehicle.tow === 'function') {
+        //         selectedVehicle.tow(truck);
+        //     } else {
+        //         console.log("This vehicle cannot be towed");
+        //     }
+        //     // TODO: Perform actions on the truck to allow the user to select another action
+        // }
+    });
   }
 
   // method to perform actions on a vehicle
